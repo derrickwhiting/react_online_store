@@ -13,7 +13,7 @@ var Item = React.createClass({
     $.ajax({
       url: '/purchase_item',
       type: 'PUT',
-      data: { item: { quantity: this.props.quantity - 1}, id: this.props.id },
+      data: { item: { quantity: this.props.quantity}, id: this.props.id },
       success: function() {
         self.props.refreshStore();
       }
@@ -22,16 +22,26 @@ var Item = React.createClass({
 
   item: function(){
     var id = 'item-' + this.props.id;
-    return(<div className='col s12 m6'>
-              <div className='card white'>
+    return(<div className='col s12 m4 l3'>
+              <div className='card white hoverable'>
                 <div className='card-content'>
                   <span className='card-title'>{this.props.name}</span>
                   <p>{this.props.description}</p>
                 </div>
                 <div className='card-action'>
-                  <p>{this.props.quantity}</p>
-                  <p>{this.props.price}</p>
+                  <div className='row'>
+                    <div className='col s12 l6'>
+                      <p>Price: ${this.props.price}</p>
+                      <p>Quantity: {this.props.quantity}</p>
+                    </div>
+                    <div className='col s12 l6'>
+                      <a className='btn-flat hoverable' onClick={this.toggleEdit}>Edit</a>
+                      <a className='btn-flat hoverable' onClick={this.deleteItem}>Delete</a>
+                      <a className='btn-flat hoverable' onClick={this.purchaseItem}>Purchase</a>
+                    </div>
+                   </div> 
                 </div>
+
               </div>
             </div>);
   },
@@ -69,9 +79,13 @@ var Item = React.createClass({
               <div className='row'>
                 <div className='col s10'>
                   <form onSubmit={this.updateItem}>
-                    <input autoFocus={true} type='text' defaultValue={this.props.name} ref='itemName' />
+                    <label for='name'>Name</label>
+                    <input autoFocus={true} placeholder='name' type='text' defaultValue={this.props.name} ref='itemName' />
+                    <label for='price'>Price</label>
                     <input type='text' defaultValue={this.props.price} ref='itemPrice' />
-                    <input type='text' defaultValue={this.props.price} ref='itemDescription' />
+                    <label for='description'>Description</label>
+                    <input type='text' defaultValue={this.props.description} ref='itemDescription' />
+                    <button className='btn-flat hoverable' type='submit'>Save</button>
                   </form>
                 </div>
                 <div className='col s2'>

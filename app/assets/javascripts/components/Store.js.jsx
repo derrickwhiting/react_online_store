@@ -55,15 +55,20 @@ var Store = React.createClass({
 
   addItemForm: function() {
     if (this.state.showAdd){
-      return(<div>
-              <form onSubmit={this.submitItem}>
-                <div className='input-field'>
-                  <input autoFocus="true" placeholder="Item Name" type='text' onChange={this.addItemName} />
-                  <input placeholder="Item Description" type='text' onChange={this.addItemDescription} />
-                  <input placeholder="Item Price" type='number' onChange={this.addItemPrice} />
-                  <input placeholder="Item Quantity" type='number' onChange={this.addItemQuantity} />
-                  <button className='btn hoverable' type='submit'>Save</button>
-                </div>);
+      return(<div className='row'>
+              <div className='card hoverable col s4'>  
+                <form onSubmit={this.submitItem}>
+                  <div className='input-field'>
+                    <input autoFocus="true" placeholder="Item Name" type='text' onChange={this.addItemName} />
+                    <input placeholder="Item Description" type='text' onChange={this.addItemDescription} />
+                    <input placeholder="Item Price" type='number' onChange={this.addItemPrice} />
+                    <input placeholder="Item Quantity" type='number' onChange={this.addItemQuantity} />
+                    <button className='btn-flat hoverable' type='submit'>Save</button>
+                    <a className='btn-flat hoverable' onClick={this.showAddForm}>Cancel</a>
+                  </div>
+                </form>
+               </div> 
+            </div>);
     }
   },
 
@@ -78,9 +83,13 @@ var Store = React.createClass({
   },
 
   render: function() {
-    return(<div className='row'>
-            {this.displayItems()}
-          </div>);
+    return(<div>
+            <a className='btn-flat hoverable' onClick={this.showAddForm}>Add Item</a>
+              {this.addItemForm()}
+              <div className='row'>
+                {this.displayItems()}
+              </div>
+            </div>);
   }
 
 

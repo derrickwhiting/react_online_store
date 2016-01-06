@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
+  
   def index
-    render json: Item.all.order(:created_at)
+    render json: Item.order(:price)
   end
 
   def create
@@ -9,9 +10,10 @@ class ItemsController < ApplicationController
   end
 
   def purchase_item
-    purchased = params[:item][:complete] == 'true' ? true : false
     item = Item.find(params[:id])
-    item.update(complete: checked)
+    quantity = params[:item][:quantity].to_i
+    new_quantity = quantity - 1
+    item.update(quantity: new_quantity)
     render json: item
   end
 
